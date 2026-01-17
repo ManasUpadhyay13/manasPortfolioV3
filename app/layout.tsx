@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Italiana } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,6 +9,12 @@ const inter = Inter({
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
+  subsets: ["latin"],
+});
+
+const italiana = Italiana({
+  variable: "--font-italiana",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrains.variable} antialiased text-foreground bg-background`}
+        className={`${inter.variable} ${jetbrains.variable} ${italiana.variable} antialiased text-foreground bg-background`}
       >
         <SmoothScroll />
         {children}

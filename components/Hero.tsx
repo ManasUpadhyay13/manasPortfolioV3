@@ -4,13 +4,29 @@ import { Container } from "./ui/Container";
 import { Section } from "./ui/Section";
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import Link from "next/link";
+
+import Image from "next/image";
 
 export function Hero() {
   return (
-    <Section className="min-h-[80vh] flex items-center justify-center pt-16 pb-16">
+    <Section className="min-h-[80vh] flex items-center justify-center pt-8 pb-16">
       <Container>
         <div className="max-w-3xl space-y-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative w-24 h-24 rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
+          >
+             <Image 
+               src="/assets/logo.jpeg" 
+               alt="Manas Upadhyay" 
+               fill
+               className="object-cover"
+               priority
+             />
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -43,7 +59,7 @@ export function Hero() {
              transition={{ duration: 0.5, delay: 0.2 }}
              className="text-xl text-gray-600 max-w-2xl leading-relaxed"
           >
-             I&apos;m <span className="text-foreground font-medium">Manas Upadhyay</span>, a Software Engineer with 3+ years of experience in building scalable AI web applications.
+             I&apos;m <span className="text-foreground font-medium">Manas Upadhyay</span>, a Software Engineer with 3+ years of experience in building scalable AI web applications, and a gym freak.
           </motion.p>
 
           <motion.div
@@ -52,13 +68,16 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap items-center gap-4 pt-4"
           >
-            <Link
-              href="#projects"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:opacity-90 transition-opacity"
             >
               View Projects
               <ArrowDown className="w-4 h-4" />
-            </Link>
+            </button>
             
             <div className="flex items-center gap-4 px-6">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-foreground transition-colors">
