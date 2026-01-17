@@ -57,7 +57,9 @@ export async function GET() {
     // Extract Totals
     // Data array usually has [yesterday, today] order if range is 2 days
     const days = summaryData.data || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const todayStats = days.find((d: any) => d.range.date === today);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const yesterdayStats = days.find((d: any) => d.range.date === yesterdayDate);
 
     return NextResponse.json({

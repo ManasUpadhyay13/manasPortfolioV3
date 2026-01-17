@@ -44,8 +44,6 @@ export function Hero() {
               </span>
               <span>Available for new opportunities</span>
             </div>
-            <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-            <span>India</span>
           </motion.div>
 
           <motion.h1
@@ -54,7 +52,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-7xl font-bold tracking-tight text-foreground"
           >
-            Building high-scale <span className="italic">systems</span> & <span className="italic">AI products.</span>
+            Building high-scale <span className="italic">systems</span> & <span className="italic">AI applications.</span>
           </motion.h1>
 
           <motion.p
@@ -63,7 +61,7 @@ export function Hero() {
              transition={{ duration: 0.5, delay: 0.2 }}
              className="text-xl text-gray-600 max-w-2xl leading-relaxed"
           >
-             I&apos;m <span className="text-foreground font-medium">Manas Upadhyay</span>, a Software Engineer with 3+ years of experience in building scalable AI web applications, and a gym freak.
+             I&apos;m <span className="text-foreground font-medium">Manas Upadhyay</span>, a Software Engineer with 3+ years of experience in building scalable AI web applications, and a gym freak. Based in <span className="text-foreground font-medium">India</span>.
           </motion.p>
 
           <motion.div
