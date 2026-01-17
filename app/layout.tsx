@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 import { SmoothScroll } from "@/components/SmoothScroll";
+import OnekoCat from "@/components/oneko/OnekoCat";
 
 export default function RootLayout({
   children,
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrains.variable} ${italiana.variable} antialiased text-foreground bg-background`}
       >
         <SmoothScroll />
+        <OnekoCat />
         {children}
       </body>
     </html>
