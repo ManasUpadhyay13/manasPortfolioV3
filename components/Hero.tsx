@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 
 import Image from "next/image";
+import { StatusIndicator } from "./ui/StatusIndicator";
 
 export function Hero() {
   return (
@@ -16,15 +17,18 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="relative w-24 h-24 rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
+            className="relative w-32 h-32 rounded-full border border-gray-100 shadow-lg"
           >
-             <Image 
-               src="/assets/logo.jpeg" 
-               alt="Manas Upadhyay" 
-               fill
-               className="object-cover"
-               priority
-             />
+             <div className="relative w-full h-full overflow-hidden rounded-full">
+                <Image 
+                  src="/assets/logo.jpeg" 
+                  alt="Manas Upadhyay" 
+                  fill
+                  className="object-cover"
+                  priority
+                />
+             </div>
+             <StatusIndicator />
           </motion.div>
 
           <motion.div
