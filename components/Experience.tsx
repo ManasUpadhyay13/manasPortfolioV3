@@ -11,10 +11,12 @@ const experiences = [
         period: 'Oct 2024 - Present',
         description: 'Building generative AI tools for reliable product photography.',
         achievements: [
-            'Built the complete Bulk Click system (schema, frontend, backend) for generating editorial product images, used by ~100 users/day.',
+            'Built the complete bulk system for generating editorial product images, used by ~100 users/day.',
             'Added 5+ new AI editors (image padding, sketch-to-image, ghost-mannequin) used by over 335 unique users/month.',
             'Developed custom model-training pipeline generating LoRA (.safetensors) and created over 500 unique AI models for fashion brands.',
-            'Set up end-to-end analytics in PostHog regarding user activation and retention.'
+            'Set up end-to-end analytics and funnels in PostHog regarding user activation and retention.',
+            'Built automated Zoho invoice generation for subscription purchases and multiple LLM-powered features.',
+            'Implemented multiple interactive guided tour, and did continuous UI/UX improvements to boost user activation.'
         ]
     },
     {
@@ -35,7 +37,8 @@ const experiences = [
         description: 'Full stack development for internal tools and client applications.',
         achievements: [
             'Developed a mobile application from scratch using React Native + TypeScript (20% hike in hiring efficiency).',
-            'Migrated employee portal backend from PHP to Node.js.'
+            'Migrated employee portal backend from PHP to Node.js.',
+            'Designed and implemented the front end of the terminal application using React.js + TypeScript, boosting admin efficiency by 30%.'
         ]
     }
 ];
