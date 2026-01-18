@@ -59,7 +59,7 @@ export function StatusIndicator() {
            >
               <div className="flex flex-col gap-1 items-start">
                  <span className="font-medium">
-                   {data.isWorking ? "Thinking and coding ⚡️" : "Away 💤"}
+                   {data.isWorking ? "Currently Coding ⚡️" : "Currently not coding 💤"}
                  </span>
                  <span className="text-gray-300 text-[10px] border-t border-white/10 pt-1 mt-0.5">
                    {data.isWorking ? `Today: ${data.todayTotal}` : `Yesterday: ${data.yesterdayTotal}`}
