@@ -19,8 +19,8 @@ const italiana = Italiana({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Senior Product Engineer",
-  description: "Senior Product Engineer portfolio showcasing experienced product building.",
+  title: "Manas Upadhyay | Software Engineer",
+  description: "Software Engineer portfolio showcasing experienced product building.",
 };
 
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -33,6 +33,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="manas upadhyay" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://manasupadhyay.xyz" />
+        <meta property="og:image" content="/assets/ogimage.png" />
+      </head>
       <body
         className={`${inter.variable} ${jetbrains.variable} ${italiana.variable} antialiased text-foreground bg-background`}
       >
