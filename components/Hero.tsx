@@ -3,7 +3,7 @@
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowDown, Github } from 'lucide-react';
 
 import Image from 'next/image';
 import { StatusIndicator } from './ui/StatusIndicator';
@@ -90,27 +90,14 @@ export function Hero() {
                             </motion.span>
                         </button>
 
-                        <div className="flex items-center gap-4 px-6">
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-500 hover:text-foreground transition-colors">
-                                <Github className="w-5 h-5" />
-                            </a>
-                            <a
-                                href="https://linkedin.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-500 hover:text-foreground transition-colors">
-                                <Linkedin className="w-5 h-5" />
-                            </a>
-                            <a
-                                href="mailto:manasupadhyay1318@gmail.com"
-                                className="text-gray-500 hover:text-foreground transition-colors">
-                                <Mail className="w-5 h-5" />
-                            </a>
-                        </div>
+                        <a
+                            href="https://github.com/manasUpadhyay13/antigravity-portoflio" // Assuming repo URL, user can update
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-foreground hover:bg-gray-50 transition-colors">
+                            <Github className="w-4 h-4" />
+                            Clone this template
+                        </a>
                     </motion.div>
                 </div>
             </Container>

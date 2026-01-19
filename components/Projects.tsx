@@ -2,103 +2,80 @@
 
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Github } from 'lucide-react';
-import { TechStack } from './ui/TechStack';
-
-const projects = [
-    {
-        title: 'Interview Saathi',
-        description:
-            'Mock interview platform powered by Google’s Gemini API. Users practice interviews with AI feedback on job descriptions and experience. Features real-time voice interaction and performance analysis.',
-        tags: ['Next.js', 'Gemini API', 'AI'],
-        link: '#',
-        github: '#'
-    },
-    {
-        title: 'Form Builder',
-        description:
-            'Drag-and-drop form builder allowing businesses to create ready-to-use forms. Supports multiple instances per user, complex validation logic, and real-time submission analytics.',
-        tags: ['React', 'DnD', 'SaaS'],
-        link: '#',
-        github: '#'
-    },
-    {
-        title: 'Manas Discord',
-        description:
-            'Full-featured Discord clone with real-time messaging via Socket.io, authentication with Clerk, and video/voice calls. Includes server management and channel creation.',
-        tags: ['Next.js', 'Socket.io', 'MySQL'],
-        link: '#',
-        github: '#'
-    }
-];
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import { projects as projectsData, Project, ProjectType } from '@/data/projects';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { ProjectCard } from './ui/ProjectCard';
 
 export function Projects() {
+    const [filter, setFilter] = useState<'All' | ProjectType>('All');
+    const [displayProjects, setDisplayProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        if (filter === 'All') {
+            // Shuffle and take top 3
+            const shuffled = [...projectsData].sort(() => 0.5 - Math.random());
+            setDisplayProjects(shuffled.slice(0, 3));
+        } else {
+            // Filter by type
+            const filtered = projectsData.filter((p) => p.type === filter);
+            setDisplayProjects(filtered);
+        }
+    }, [filter]);
+
+    const tabs: ('All' | ProjectType)[] = ['All', 'Full Stack', 'Frontend', 'Backend'];
+
     return (
         <Section id="projects" className="bg-white">
             <Container>
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl md:text-4xl font-bold tracking-tight mb-16">
-                    Featured Projects
-                </motion.h2>
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-3xl md:text-4xl font-bold tracking-tight">
+                        Featured Projects
+                    </motion.h2>
+
+                    {/* Filter Tabs */}
+                    <div className="flex flex-wrap gap-2">
+                        {tabs.map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => setFilter(tab)}
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                                    filter === tab
+                                        ? 'bg-foreground text-background'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                }`}>
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
                 <div className="space-y-0">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group grid md:grid-cols-[1fr_300px] gap-8 py-12 border-t border-gray-200 transition-all hover:bg-gray-50/50 -mx-6 px-6 hover:scale-[1.01]">
-                            <div className="flex flex-col justify-between">
-                                <div>
-                                    <h3 className="text-2xl font-bold text-foreground mb-4 decoration-1 underline-offset-4 decoration-gray-300 transition-all">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-gray-medium leading-relaxed text-lg max-w-2xl mb-6">
-                                        {project.description}
-                                    </p>
-
-                                    <TechStack technologies={project.tags} className="mb-6" />
-                                </div>
-
-                                <div className="flex gap-6">
-                                    <a
-                                        href={project.github}
-                                        className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-foreground transition-colors group/link">
-                                        <Github
-                                            size={20}
-                                            className="group-hover/link:scale-110 transition-transform"
-                                        />
-                                        <span className="border-b border-transparent group-hover/link:border-foreground transition-colors">
-                                            View Code
-                                        </span>
-                                    </a>
-                                    <a
-                                        href={project.link}
-                                        className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-foreground transition-colors group/link">
-                                        <ArrowUpRight
-                                            size={20}
-                                            className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
-                                        />
-                                        <span className="border-b border-transparent group-hover/link:border-foreground transition-colors">
-                                            Live Demo
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Minimal Geometric Placeholder/Preview */}
-                            <div className="flex items-center justify-center bg-gray-50 border border-gray-100 aspect-[4/3] group-hover:border-gray-200 transition-colors rounded-xl md:rounded-none mt-8 md:mt-0">
-                                <div className="text-gray-300 font-medium">Preview</div>
-                            </div>
-                        </motion.div>
-                    ))}
+                    <AnimatePresence mode="wait">
+                        {displayProjects.map((project, index) => (
+                            <ProjectCard
+                                key={project.title + filter + index}
+                                project={project}
+                                index={index}
+                            />
+                        ))}
+                    </AnimatePresence>
                     <div className="border-t border-gray-200" />
+                </div>
+
+                <div className="mt-16 flex justify-center">
+                    <Link
+                        href="/projects"
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-gray-100 text-foreground rounded-full font-medium hover:bg-gray-200 transition-colors">
+                        View All Projects
+                        <ArrowRight className="w-5 h-5" />
+                    </Link>
                 </div>
             </Container>
         </Section>
