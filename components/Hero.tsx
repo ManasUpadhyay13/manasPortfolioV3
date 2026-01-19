@@ -40,7 +40,7 @@ export function Hero() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                             </span>
-                            <span>Available for new opportunities</span>
+                            <span>Available for new projects</span>
                         </div>
                     </motion.div>
 
@@ -90,14 +90,15 @@ export function Hero() {
                             </motion.span>
                         </button>
 
-                        <a
-                            href="https://github.com/manasUpadhyay13/antigravity-portoflio" // Assuming repo URL, user can update
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-foreground hover:bg-gray-50 transition-colors">
-                            <Github className="w-4 h-4" />
-                            Clone this template
-                        </a>
+                        <div className="relative">
+                            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-gray-400 cursor-not-allowed bg-gray-50/50 select-none">
+                                <Github className="w-4 h-4" />
+                                Clone this template
+                            </div>
+                            <span className="absolute -top-2 -right-2 px-2 py-0.5 text-[10px] font-semibold bg-white text-gray-500 border border-gray-200 rounded-full shadow-sm whitespace-nowrap">
+                                Coming Soon
+                            </span>
+                        </div>
                     </motion.div>
                 </div>
             </Container>
