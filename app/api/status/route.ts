@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const revalidate = 300; // Revalidate every 5 minutes
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
     const apiKey = process.env.WAKATIME_API_KEY;
@@ -22,7 +22,7 @@ export async function GET() {
             `${baseUrl}/users/current/summaries?start=${yesterdayDate}&end=${today}`,
             {
                 headers: { Authorization: authHeader },
-                next: { revalidate: 900 }
+                cache: 'no-store'
             }
         );
         const summaryData = await summaryRes.json();
@@ -30,9 +30,7 @@ export async function GET() {
         // 2. Get Heartbeats for "Is Working" status
         const heartbeatsRes = await fetch(`${baseUrl}/users/current/heartbeats?date=${today}`, {
             headers: { Authorization: authHeader },
-            next: { revalidate: 60 } // Keep heartbeats slightly fresher if possible, but the route global revalidate might override.
-            // Ideally we want isWorking to be fresh, but stats cached.
-            // Given the user asked for 15min cache on server, we stick to the global route revalidate.
+            cache: 'no-store'
         });
 
         const heartbeatsData = await heartbeatsRes.json();
