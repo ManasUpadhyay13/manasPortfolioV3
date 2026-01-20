@@ -60,7 +60,8 @@ export function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group grid md:grid-cols-[1fr_300px] gap-8 py-12 border-t border-gray-200 transition-all hover:bg-gray-50/50 -mx-6 px-6 hover:scale-[1.01] items-center">
+                            whileHover={{ scale: 1.01 }}
+                            className="group grid md:grid-cols-[1fr_300px] gap-8 py-12 border-t border-gray-200 transition-colors hover:bg-gray-50/50 -mx-6 px-6 items-center">
                             <div className="flex flex-col justify-between">
                                 <div>
                                     <h3 className="text-2xl font-bold text-foreground mb-4 decoration-1 underline-offset-4 decoration-gray-300 transition-all">

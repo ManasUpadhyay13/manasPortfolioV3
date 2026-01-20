@@ -61,9 +61,10 @@ export function Experience() {
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            whileHover={{ scale: 1.01 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group grid md:grid-cols-[300px_1fr] gap-8 py-12 border-t border-gray-200 transition-all hover:bg-white/50 -mx-6 px-6  hover:scale-[1.01]">
+                            className="group grid md:grid-cols-[300px_1fr] gap-8 py-12 border-t border-gray-200 transition-colors hover:bg-white/50 -mx-6 px-6">
                             <div className="flex flex-col">
                                 <span className="text-sm font-mono text-gray-medium mb-2 uppercase tracking-wider">
                                     {exp.period}
