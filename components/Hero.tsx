@@ -77,7 +77,6 @@ export function Hero() {
                                     ?.scrollIntoView({ behavior: 'smooth' });
                             }}
                             className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer">
-                            View Projects
                             <motion.span
                                 animate={{ y: [-1, 1] }}
                                 transition={{
@@ -88,6 +87,7 @@ export function Hero() {
                                 }}>
                                 <ArrowDown className="w-4 h-4" />
                             </motion.span>
+                            View Projects
                         </button>
 
                         <div className="relative">
