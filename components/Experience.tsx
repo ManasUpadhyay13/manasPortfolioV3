@@ -13,12 +13,12 @@ const experiences = [
         period: 'Oct 2024 - Present',
         description: 'Building generative AI tools for reliable product photography.',
         achievements: [
-            'Built the complete bulk system for generating editorial product images, used by ~100 users/day.',
-            'Added 5+ new AI editors (image padding, sketch-to-image, ghost-mannequin) used by over 335 unique users/month.',
-            'Developed custom model-training pipeline generating LoRA (.safetensors) and created over 500 unique AI models for fashion brands.',
-            'Set up end-to-end analytics and funnels in PostHog regarding user activation and retention.',
+            'Built the complete Bulk editorial system for generating editorial product images in bulk, used by nearly 100 users/day.',
+            'Added 5+ new AI editors/workflows used by over 335 unique users/month and maintained the video-generation tool with new video generation models.',
+            'Developed custom model-training pipeline using AI-toolkit and flux-context-portrait series model that created over 500 unique AI models for global fashion brands.',
             'Built automated Zoho invoice generation for subscription purchases and multiple LLM-powered features.',
-            'Implemented multiple interactive guided tour, and did continuous UI/UX improvements to boost user activation.'
+            'Implemented multiple interactive guided tours, and did continuous UI/UX improvements to boost user activation.',
+            'Set up end-to-end analytics in PostHog, Crisp, and Mailjet, including funnels, events, retention, and trend dashboards for the internal team to analyze the user metrics.'
         ]
     },
     {
