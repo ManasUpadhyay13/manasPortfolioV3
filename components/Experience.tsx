@@ -3,6 +3,8 @@
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowRight, BarChart3 } from 'lucide-react';
 
 const experiences = [
     {
@@ -100,6 +102,21 @@ export function Experience() {
                     {/* Bottom border for visual closure */}
                     <div className="border-t border-gray-200" />
                 </div>
+
+                {/* Coding Stats CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-12 flex justify-center">
+                    <Link
+                        href="/coding-stats"
+                        className="group inline-flex items-center gap-3 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:bg-gray-800 transition-colors">
+                        <BarChart3 className="w-5 h-5" />
+                        View my coding stats
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </motion.div>
             </Container>
         </Section>
     );

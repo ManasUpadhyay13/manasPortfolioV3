@@ -2,13 +2,41 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Zap } from 'lucide-react';
+import { Code2, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 type StatusData = {
     isWorking: boolean;
     todayTotal: string;
     yesterdayTotal: string;
+    twoDaysAgoTotal: string;
+    todaySeconds: number;
+    yesterdaySeconds: number;
+    twoDaysAgoSeconds: number;
 };
+
+function getCodingTimeDisplay(data: StatusData): { label: string; time: string } {
+    // If currently coding, show today's time
+    if (data.isWorking) {
+        return { label: 'Today', time: data.todayTotal };
+    }
+
+    // Not currently coding - apply fallback logic
+    if (data.todaySeconds > 0) {
+        return { label: 'Today', time: data.todayTotal };
+    }
+
+    if (data.yesterdaySeconds > 0) {
+        return { label: 'Yesterday', time: data.yesterdayTotal };
+    }
+
+    if (data.twoDaysAgoSeconds > 0) {
+        return { label: '2 days ago', time: data.twoDaysAgoTotal };
+    }
+
+    // No recent coding activity
+    return { label: 'Recently', time: '0 hrs' };
+}
 
 export function StatusIndicator() {
     const [data, setData] = useState<StatusData | null>(null);
@@ -54,6 +82,8 @@ export function StatusIndicator() {
 
     if (loading || !data) return null;
 
+    const codingTime = getCodingTimeDisplay(data);
+
     return (
         <div className="absolute bottom-0 right-0 z-20">
             <div
@@ -82,17 +112,22 @@ export function StatusIndicator() {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -5 }}
                                 className="bg-black/90 text-white text-xs rounded-lg py-2 px-3 shadow-xl backdrop-blur-sm border border-white/10">
-                                <div className="flex flex-col gap-1 items-start">
+                                <div className="flex flex-col gap-1.5 items-start">
                                     <span className="font-medium">
                                         {data.isWorking
                                             ? 'Currently Coding ⚡️'
                                             : 'Currently not coding 💤'}
                                     </span>
-                                    <span className="text-gray-300 text-[10px] border-t border-white/10 pt-1 mt-0.5">
-                                        {data.isWorking
-                                            ? `Today: ${data.todayTotal}`
-                                            : `Yesterday: ${data.yesterdayTotal}`}
+                                    <span className="text-gray-300 text-[10px] border-t border-white/10 pt-1.5 w-full">
+                                        {codingTime.label}: {codingTime.time}
                                     </span>
+                                    <Link
+                                        href="/coding-stats"
+                                        className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 transition-colors mt-0.5"
+                                        onClick={(e) => e.stopPropagation()}>
+                                        View stats
+                                        <ArrowRight className="w-2.5 h-2.5" />
+                                    </Link>
                                 </div>
                                 {/* Arrow */}
                                 <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-black/90"></div>

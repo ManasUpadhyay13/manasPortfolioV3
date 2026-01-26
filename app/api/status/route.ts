@@ -16,10 +16,11 @@ export async function GET() {
         // Dates
         const today = new Date().toISOString().split('T')[0];
         const yesterdayDate = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        const twoDaysAgoDate = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0];
 
-        // 1. Get Daily Summary (Today & Yesterday)
+        // 1. Get Daily Summary (Today, Yesterday & 2 days ago)
         const summaryRes = await fetch(
-            `${baseUrl}/users/current/summaries?start=${yesterdayDate}&end=${today}`,
+            `${baseUrl}/users/current/summaries?start=${twoDaysAgoDate}&end=${today}`,
             {
                 headers: { Authorization: authHeader },
                 cache: 'no-store'
@@ -50,17 +51,23 @@ export async function GET() {
         }
 
         // Extract Totals
-        // Data array usually has [yesterday, today] order if range is 2 days
         const days = summaryData.data || [];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const todayStats = days.find((d: any) => d.range.date === today);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const yesterdayStats = days.find((d: any) => d.range.date === yesterdayDate);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const twoDaysAgoStats = days.find((d: any) => d.range.date === twoDaysAgoDate);
 
         return NextResponse.json({
             isWorking,
             todayTotal: todayStats?.grand_total?.text || '0 hrs',
-            yesterdayTotal: yesterdayStats?.grand_total?.text || '0 hrs'
+            yesterdayTotal: yesterdayStats?.grand_total?.text || '0 hrs',
+            twoDaysAgoTotal: twoDaysAgoStats?.grand_total?.text || '0 hrs',
+            // Include raw seconds for comparison in StatusIndicator
+            todaySeconds: todayStats?.grand_total?.total_seconds || 0,
+            yesterdaySeconds: yesterdayStats?.grand_total?.total_seconds || 0,
+            twoDaysAgoSeconds: twoDaysAgoStats?.grand_total?.total_seconds || 0
         });
     } catch (error) {
         console.error('Wakatime API Error:', error);
