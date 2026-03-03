@@ -7,6 +7,7 @@ import { ArrowDown, Github } from 'lucide-react';
 
 import Image from 'next/image';
 import { StatusIndicator } from './ui/StatusIndicator';
+import TechStack from './TechStack';
 
 export function Hero() {
     return (
@@ -63,6 +64,8 @@ export function Hero() {
                         web applications, and a gym freak. Based in{' '}
                         <span className="text-foreground font-medium">India</span>.
                     </motion.p>
+
+                    <TechStack />
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
