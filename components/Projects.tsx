@@ -4,8 +4,6 @@ import { Container } from './ui/Container';
 import { Section } from './ui/Section';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Github, Video } from 'lucide-react';
-import { TechStack } from './ui/TechStack';
-import Image from 'next/image';
 
 const projects = [
     {

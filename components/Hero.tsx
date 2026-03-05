@@ -21,7 +21,7 @@ export function Hero() {
                     hoverFillColor="#ededed"
                 />
             </div>
-            <Container className="md:-mt-20 z-10">
+            <Container className="md:-mt-13 z-10">
                 <div className="max-w-3xl space-y-8">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useLoading } from '@/components/LoadingProvider';
 
 type StatusData = {
     isWorking: boolean;
@@ -43,6 +44,7 @@ export function StatusIndicator() {
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const [isHoverable, setIsHoverable] = useState(true);
+    const { resolveLoader } = useLoading();
 
     useEffect(() => {
         // Check if device supports hover
@@ -62,10 +64,12 @@ export function StatusIndicator() {
                 console.error('Failed to fetch status', e);
             } finally {
                 setLoading(false);
+                resolveLoader('status');
             }
         };
 
         fetchStatus();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleMouseEnter = () => {
