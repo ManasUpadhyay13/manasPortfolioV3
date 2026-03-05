@@ -1,16 +1,18 @@
 import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 
 interface SectionProps {
-  children: ReactNode;
-  className?: string;
-  id?: string;
+    children: ReactNode;
+    className?: string;
+    id?: string;
 }
 
-export function Section({ children, className, id }: SectionProps) {
-  return (
-    <section id={id} className={clsx("py-20 md:py-32", className)}>
-      {children}
-    </section>
-  );
-}
+export const Section = forwardRef<HTMLElement, SectionProps>(({ children, className, id }, ref) => {
+    return (
+        <section ref={ref} id={id} className={clsx('py-20 md:py-32', className)}>
+            {children}
+        </section>
+    );
+});
+
+Section.displayName = 'Section';
