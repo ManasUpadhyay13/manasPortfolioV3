@@ -7,12 +7,21 @@ import { ArrowDown, Github } from 'lucide-react';
 
 import Image from 'next/image';
 import { StatusIndicator } from './ui/StatusIndicator';
-import TechStack from './TechStack';
+import Squares from './Squares';
 
 export function Hero() {
     return (
-        <Section className="min-h-[80vh] flex items-center justify-center pt-8 pb-16">
-            <Container>
+        <Section className="min-h-[80vh] flex items-center justify-center pt-8 pb-16  relative">
+            <div className="absolute inset-0  w-full h-full">
+                <Squares
+                    speed={0.5}
+                    squareSize={30}
+                    direction="diagonal"
+                    borderColor="#e8e8e8"
+                    hoverFillColor="#ededed"
+                />
+            </div>
+            <Container className="md:-mt-20 z-10">
                 <div className="max-w-3xl space-y-8">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -65,7 +74,7 @@ export function Hero() {
                         <span className="text-foreground font-medium">India</span>.
                     </motion.p>
 
-                    <TechStack />
+                    {/* <TechStack /> */}
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
