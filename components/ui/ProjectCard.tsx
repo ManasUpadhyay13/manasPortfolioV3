@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Github } from 'lucide-react';
-import { TechStack } from './TechStack';
 import { Project } from '@/data/projects';
 
 interface ProjectCardProps {
@@ -31,8 +30,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                     <p className="text-gray-medium leading-relaxed text-lg max-w-2xl mb-6">
                         {project.description}
                     </p>
-
-                    <TechStack technologies={project.tags} className="mb-6" />
                 </div>
 
                 <div className="flex gap-6">

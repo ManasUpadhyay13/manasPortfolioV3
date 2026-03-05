@@ -3,7 +3,7 @@
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github } from 'lucide-react';
+import { ArrowDown, Calendar } from 'lucide-react';
 
 import Image from 'next/image';
 import { StatusIndicator } from './ui/StatusIndicator';
@@ -102,15 +102,14 @@ export function Hero() {
                             View Projects
                         </button>
 
-                        <div className="relative">
-                            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-gray-400 cursor-not-allowed bg-gray-50/50 select-none">
-                                <Github className="w-4 h-4" />
-                                Clone this template
-                            </div>
-                            <span className="absolute -top-2 -right-2 px-2 py-0.5 text-[10px] font-semibold bg-white text-gray-500 border border-gray-200 rounded-full shadow-sm whitespace-nowrap">
-                                Coming Soon
-                            </span>
-                        </div>
+                        <a
+                            href="https://cal.com/manasupadhyay/15min"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:text-black hover:border-black hover:bg-gray-50 bg-white transition-all cursor-pointer">
+                            <Calendar size={18} />
+                            <span>Book a call</span>
+                        </a>
                     </motion.div>
                 </div>
             </Container>
