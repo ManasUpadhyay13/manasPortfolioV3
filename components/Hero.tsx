@@ -22,7 +22,7 @@ export function Hero() {
                 />
             </div>
             <Container className="md:-mt-13 z-10">
-                <div className="max-w-3xl space-y-8">
+                <div className="space-y-8">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}

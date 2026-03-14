@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
 import TechStack from './TechStack';
+import PinboardCanvas from './PinboardCanvas';
 import { motion } from 'framer-motion';
 
 export default function About() {
@@ -53,25 +54,35 @@ export default function About() {
         <Section
             id="about"
             ref={containerRef}
-            className="flex flex-col justify-center min-h-[50vh]">
-            <Container className="">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
-                    About Me
-                </motion.h2>
-                <p
-                    ref={textRef}
-                    className="text-xl font-medium leading-[1.3] md:leading-[1.3] lg:leading-[1.3] tracking-tight mb-[60px]">
-                    {aboutText.split(' ').map((word, i) => (
-                        <span key={i} className="word inline-block mr-[0.25em]">
-                            {word}
-                        </span>
-                    ))}
-                </p>
-                <TechStack />
+            className="flex flex-col justify-center min-h-[70vh] overflow-x-hidden">
+            <Container>
+                <div className="grid md:grid-cols-[1fr_2fr] gap-10 items-start">
+                    {/* Left Column — Text */}
+                    <div className="min-w-0">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
+                            About Me
+                        </motion.h2>
+                        <p
+                            ref={textRef}
+                            className="text-xl font-medium leading-[1.3] md:leading-[1.3] lg:leading-[1.3] tracking-tight mb-[60px]">
+                            {aboutText.split(' ').map((word, i) => (
+                                <span key={i} className="word inline-block mr-[0.25em]">
+                                    {word}
+                                </span>
+                            ))}
+                        </p>
+                        <TechStack />
+                    </div>
+
+                    {/* Right Column — Pinboard Canvas */}
+                    <div className="hidden md:block sticky top-32">
+                        <PinboardCanvas />
+                    </div>
+                </div>
             </Container>
         </Section>
     );

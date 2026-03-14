@@ -11,7 +11,7 @@ export function Navbar() {
                         Manas
                     </span>
                 </Link>
-                <div className="flex items-center gap-6 md:gap-8">
+                {/* <div className="flex items-center gap-6 md:gap-8">
                     <a
                         href="#about"
                         onClick={(e) => {
@@ -45,7 +45,7 @@ export function Navbar() {
                         className="text-sm font-medium text-gray-600 hover:text-black transition-colors">
                         Projects
                     </a>
-                </div>
+                </div> */}
             </Container>
         </header>
     );

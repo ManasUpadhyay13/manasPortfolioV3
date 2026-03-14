@@ -63,40 +63,42 @@ export function Experience() {
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            whileHover={{ scale: 1.01 }}
+                            whileHover={{ scale: 1.005 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group grid md:grid-cols-[300px_1fr] gap-8 py-12 border-t border-gray-200 transition-colors hover:bg-white/50 -mx-6 px-6">
-                            <div className="flex flex-col">
-                                <span className="text-sm font-mono text-gray-medium mb-2 uppercase tracking-wider">
+                            className="group py-12 border-t border-gray-200 transition-colors hover:bg-white/50 -mx-6 px-6">
+                            {/* Top row: period · company · role */}
+                            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
+                                <span className="text-sm font-mono text-gray-medium uppercase tracking-wider">
                                     {exp.period}
                                 </span>
+                                <span className="text-gray-300">·</span>
                                 <span
-                                    className={`text-xl font-bold text-foreground w-fit ${exp.company === 'Hy Bro :)' ? 'blur-sm select-none' : ''}`}>
+                                    className={`text-xl font-bold text-foreground ${exp.company === 'Hy Bro :)' ? 'blur-sm select-none' : ''}`}>
                                     {exp.company}
+                                </span>
+                                <span className="text-gray-300">·</span>
+                                <span className="text-lg font-semibold text-foreground">
+                                    {exp.role}
                                 </span>
                             </div>
 
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                                    {exp.role}
-                                </h3>
+                            {/* Description */}
+                            <p className="text-gray-medium leading-relaxed mb-5">
+                                {exp.description}
+                            </p>
 
-                                <p className="text-gray-medium leading-relaxed max-w-2xl">
-                                    {exp.description}
-                                </p>
-
-                                <ul className="space-y-3 pt-2">
-                                    {exp.achievements.map((achievement, i) => (
-                                        <li
-                                            key={i}
-                                            className="flex gap-3 text-sm text-gray-medium leading-relaxed">
-                                            <span className="mt-2 h-1.5 w-1.5 min-w-[6px] rounded-full bg-gray-300 group-hover:bg-black transition-colors" />
-                                            {achievement}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            {/* Achievements — full width */}
+                            <ul className="space-y-3">
+                                {exp.achievements.map((achievement, i) => (
+                                    <li
+                                        key={i}
+                                        className="flex gap-3 text-sm text-gray-medium leading-relaxed">
+                                        <span className="mt-2 h-1.5 w-1.5 min-w-[6px] rounded-full bg-gray-300 group-hover:bg-black transition-colors" />
+                                        {achievement}
+                                    </li>
+                                ))}
+                            </ul>
                         </motion.div>
                     ))}
                     {/* Bottom border for visual closure */}

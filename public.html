@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hero — Batman Reveal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #090909;
+      --yellow: #f5c518;
+      --white: #f0ede8;
+      --grey: #888;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      mix-blend-mode: difference;
+    }
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--white);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    nav ul li a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      cursor: crosshair;
+      overflow: hidden;
+    }
+
+    /* image stack */
+    .hero-images {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-images img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* base: normal photo */
+    .img-base {
+      opacity: 1;
+      transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: grayscale(20%);
+    }
+
+    /* overlay: batman mask photo */
+    .img-mask {
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* On hover — swap */
+    .hero:hover .img-base {
+      opacity: 0;
+    }
+    .hero:hover .img-mask {
+      opacity: 1;
+    }
+
+    /* dark gradient at bottom for text legibility */
+    .hero-images::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.92) 0%,
+        rgba(0,0,0,0.4) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    /* ── HERO TEXT ── */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 56px 60px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .hero-left h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 10vw, 130px);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .hero-left h1 span {
+      color: var(--yellow);
+      -webkit-text-stroke: 0px;
+      transition: color 0.55s ease, -webkit-text-stroke 0.55s ease;
+    }
+
+    .hero:hover .hero-left h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--yellow);
+    }
+
+    .hero-left .tagline {
+      margin-top: 16px;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .hero-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
+    }
+
+    .hint {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--grey);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.3s;
+    }
+
+    .hero:hover .hint { opacity: 0; }
+
+    .hint-reveal {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      position: absolute;
+      bottom: 68px;
+      right: 56px;
+    }
+
+    .hero:hover .hint-reveal { opacity: 1; }
+
+    .hint-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--grey);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.6); opacity: 1; }
+    }
+
+    /* ── PLACEHOLDER images (SVG-based demo since no real photos) ── */
+    .demo-notice {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      z-index: 200;
+      white-space: nowrap;
+    }
+
+    /* ── SIDE LABEL ── */
+    .side-label {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    /* ── SCROLL ARROW ── */
+    .scroll-arrow {
+      position: absolute;
+      bottom: 32px;
+      left: 56px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .arrow-line {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .arrow-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--yellow);
+      animation: sweep 2s ease-in-out infinite;
+    }
+    @keyframes sweep {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* ── YEAR BADGE ── */
+    .year-badge {
+      position: absolute;
+      top: 50%;
+      left: 56px;
+      transform: translateY(-50%);
+      z-index: 10;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.15);
+      writing-mode: vertical-rl;
+    }
+
+    /* ── HERO BORDER ── */
+    .corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      z-index: 20;
+      opacity: 0.3;
+    }
+    .corner-tl { top: 90px; left: 20px; border-top: 1px solid var(--white); border-left: 1px solid var(--white); }
+    .corner-tr { top: 90px; right: 20px; border-top: 1px solid var(--white); border-right: 1px solid var(--white); }
+    .corner-bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--white); border-left: 1px solid var(--white); }
+    .corner-br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--white); border-right: 1px solid var(--white); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Bruce W.</div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <!-- Corner decorators -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <!-- IMAGE STACK -->
+    <div class="hero-images">
+
+      <!-- BASE IMAGE: normal day photo -->
+      <img class="img-base" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1600&q=80&fit=crop&crop=face" alt="Portrait" />
+
+      <!-- MASK IMAGE: dramatic/dark version -->
+      <img class="img-mask" src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?w=1600&q=80&fit=crop&crop=face" alt="Batman Portrait" />
+
+    </div>
+
+    <!-- Side label -->
+    <div class="side-label">Hover to reveal</div>
+
+    <!-- Year -->
+    <div class="year-badge">2025</div>
+
+    <!-- Hero content -->
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1>The <span>Dark</span><br>Knight</h1>
+        <p class="tagline">Designer · Developer · Vigilante</p>
+      </div>
+      <div class="hero-right">
+        <div class="hint">
+          <div class="hint-dot"></div>
+          Hover to unmask
+        </div>
+      </div>
+    </div>
+
+    <!-- Reveal hint -->
+    <div class="hint-reveal">
+      ⚡ Identity revealed
+    </div>
+
+    <!-- Scroll -->
+    <div class="scroll-arrow">
+      <div class="arrow-line"></div>
+      Scroll
+    </div>
+
+  </section>
+
+  <div class="demo-notice">🦇 Replace the two &lt;img&gt; srcs with your own photos</div>
+
+</body>
+</html>

@@ -11,9 +11,9 @@ export default function Home() {
         <main className="min-h-screen bg-background text-foreground relative selection:bg-gray-200">
             <Navbar />
             <Hero />
+            {/* <About /> */}
             <Experience />
-            <About />
-            <Projects />
+            {/* <Projects /> */}
             <Contact />
             <Footer />
         </main>

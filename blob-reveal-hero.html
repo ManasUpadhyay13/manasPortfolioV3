@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blob Reveal Hero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #fff;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .hero .img-base {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      z-index: 1;
+    }
+
+    .img-reveal-src { display: none; }
+
+    #revealCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-text {
+      position: absolute;
+      bottom: 56px;
+      left: 56px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 11vw, 140px);
+      line-height: 0.88;
+      color: #fff;
+      mix-blend-mode: difference;
+      letter-spacing: 1px;
+    }
+
+    .hero-text p {
+      margin-top: 14px;
+      font-size: 12px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      mix-blend-mode: difference;
+    }
+
+    nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      pointer-events: none;
+    }
+
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 4px;
+      color: #111;
+    }
+
+    nav .nav-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" id="hero">
+
+   
+
+    <img class="img-base" id="imgBase"
+      src="./main.avif"
+      alt="Base portrait" />
+
+    <img class="img-reveal-src" id="imgReveal"
+      src="./mask.avif"
+      alt="Masked portrait" />
+
+    <canvas id="revealCanvas"></canvas>
+
+
+  </section>
+
+  <script>
+    const hero      = document.getElementById('hero');
+    const canvas    = document.getElementById('revealCanvas');
+    const ctx       = canvas.getContext('2d');
+    const imgBase   = document.getElementById('imgBase');
+    const imgReveal = document.getElementById('imgReveal');
+
+    // ── CONFIG ──
+    const BLOB_RADIUS   = 0.18;    // fraction of min(W,H) — reveal area (reduced 20%)
+    const TRAIL_LIFETIME = 1200;   // ms — how long each trail stamp lives before fully collapsed
+    const STAMP_INTERVAL = 8;      // min px distance between stamps
+
+    // ── STATE ──
+    let mouseX = -9999, mouseY = -9999;
+    let isInside = false;
+
+    // Trail: array of { x, y, birth, onImage }
+    // Each stamp starts at full radius and SHRINKS to 0 over TRAIL_LIFETIME
+    let trail = [];
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // ── MOUSE ──
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      mouseX = e.clientX - r.left;
+      mouseY = e.clientY - r.top;
+      isInside = true;
+    });
+    hero.addEventListener('mouseleave', () => {
+      isInside = false;
+    });
+
+    // ── IMAGE RECT ──
+    function getImageRect() {
+      const cw = canvas.width, ch = canvas.height;
+      const iw = imgBase.naturalWidth, ih = imgBase.naturalHeight;
+      if (!iw || !ih) return { x: 0, y: 0, w: cw, h: ch };
+      const scale = Math.min(cw / iw, ch / ih);
+      const w = iw * scale, h = ih * scale;
+      // Expand by 1px to eliminate any sub-pixel gap at borders
+      const rx = Math.floor((cw - w) / 2) - 1;
+      const ry = Math.floor((ch - h) / 2) - 1;
+      return { x: rx, y: ry, w: Math.ceil(w) + 2, h: Math.ceil(h) + 2 };
+    }
+
+    function isOverImage(x, y, imgRect) {
+      return (
+        x >= imgRect.x && x <= imgRect.x + imgRect.w &&
+        y >= imgRect.y && y <= imgRect.y + imgRect.h
+      );
+    }
+
+    // ── BLOB PATH — hard-edged irregular organic shape ──
+    function traceBlobPath(cx, cy, radius) {
+      const pts = [
+        [0.50, 0.02], [0.72, 0.06], [0.92, 0.20],
+        [0.98, 0.42], [0.93, 0.65], [0.80, 0.85],
+        [0.60, 0.96], [0.38, 0.98], [0.18, 0.86],
+        [0.05, 0.66], [0.02, 0.42], [0.12, 0.18],
+      ];
+      const d = radius * 2, ox = cx - radius, oy = cy - radius;
+      const len = pts.length;
+
+      ctx.beginPath();
+      ctx.moveTo(ox + pts[0][0] * d, oy + pts[0][1] * d);
+      for (let i = 0; i < len; i++) {
+        const cur  = pts[i];
+        const next = pts[(i + 1) % len];
+        const mx = (cur[0] + next[0]) / 2;
+        const my = (cur[1] + next[1]) / 2;
+        ctx.quadraticCurveTo(
+          ox + cur[0] * d, oy + cur[1] * d,
+          ox + mx * d,     oy + my * d
+        );
+      }
+      ctx.closePath();
+    }
+
+    // ── WAVY LINES (for non-image areas) ──
+    function drawWavyLines(cx, cy, radius, t) {
+      const LINES = 12;
+      const AMP = 6;
+      const FREQ = 0.02;
+
+      ctx.strokeStyle = 'rgba(0,0,0,0.07)';
+      ctx.lineWidth = 2;
+      const top   = cy - radius;
+      const left  = cx - radius * 1.2;
+      const right = cx + radius * 1.2;
+      const step  = (radius * 2) / LINES;
+
+      for (let i = 0; i < LINES; i++) {
+        const y = top + step * i + step * 0.5;
+        ctx.beginPath();
+        for (let x = left; x <= right; x += 3) {
+          const yy = y + Math.sin(x * FREQ + t * 0.002 + i * 0.9) * AMP;
+          if (x === left) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+        }
+        ctx.stroke();
+      }
+    }
+
+    // ── MAIN DRAW ──
+    function draw(ts) {
+      const W = canvas.width, H = canvas.height;
+      const maxR = Math.min(W, H) * BLOB_RADIUS;
+      const imgRect = getImageRect();
+
+      // ── Add new stamp if mouse moved enough ──
+      if (isInside) {
+        const last = trail[trail.length - 1];
+        const dx = last ? mouseX - last.x : 9999;
+        const dy = last ? mouseY - last.y : 9999;
+        if (dx * dx + dy * dy > STAMP_INTERVAL * STAMP_INTERVAL) {
+          trail.push({
+            x: mouseX,
+            y: mouseY,
+            birth: ts,
+            leftAt: null,  // collapse timer starts only when mouse leaves
+          });
+        }
+      }
+
+      // ── Remove dead stamps ──
+      trail = trail.filter(s => {
+        if (s.leftAt === null) return true;  // mouse still inside, keep alive
+        return (ts - s.leftAt) < TRAIL_LIFETIME;
+      });
+
+      // ── Update stamps: check if mouse is still inside each stamp ──
+      for (let i = 0; i < trail.length; i++) {
+        const s = trail[i];
+        const dx = mouseX - s.x;
+        const dy = mouseY - s.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (isInside && dist < maxR) {
+          // Mouse is within this stamp's radius — keep it alive
+          s.leftAt = null;
+        } else if (s.leftAt === null) {
+          // Mouse just left this stamp — start the collapse timer NOW
+          s.leftAt = ts;
+        }
+      }
+
+      // ── Clear ──
+      ctx.clearRect(0, 0, W, H);
+
+      // ── Draw each stamp ──
+      for (let i = 0; i < trail.length; i++) {
+        const s = trail[i];
+
+        let radius;
+        if (s.leftAt === null) {
+          // Mouse is still inside — full size, no collapse
+          radius = maxR;
+        } else {
+          // Mouse has left — collapse over time
+          const age = ts - s.leftAt;
+          const life = age / TRAIL_LIFETIME;
+          const easedLife = life * life * life;
+          radius = maxR * (1 - easedLife);
+        }
+
+        if (radius < 2) continue;
+
+        // ── LAYER 1: Wavy lines in the non-image part of the blob ──
+        ctx.save();
+        traceBlobPath(s.x, s.y, radius);
+        ctx.clip();
+
+        // Fill + wavy lines across entire blob
+        ctx.fillStyle = 'rgba(245, 245, 245, 0.95)';
+        ctx.fill();
+        drawWavyLines(s.x, s.y, radius, ts);
+        ctx.restore();
+
+        // ── LAYER 2: Mask image on top, clipped to BOTH blob AND image rect ──
+        if (imgReveal.complete && imgReveal.naturalWidth) {
+          ctx.save();
+          traceBlobPath(s.x, s.y, radius);
+          ctx.clip();
+          ctx.beginPath();
+          ctx.rect(imgRect.x, imgRect.y, imgRect.w, imgRect.h);
+          ctx.clip();
+          ctx.drawImage(imgReveal, imgRect.x, imgRect.y, imgRect.w, imgRect.h);
+          ctx.restore();
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    // ── KICK OFF ──
+    function start() { requestAnimationFrame(draw); }
+
+    if (imgReveal.complete && imgBase.complete) {
+      start();
+    } else {
+      let loaded = 0;
+      const check = () => { if (++loaded >= 2) start(); };
+      if (imgReveal.complete) check(); else imgReveal.addEventListener('load', check);
+      if (imgBase.complete)   check(); else imgBase.addEventListener('load', check);
+      setTimeout(start, 2000);
+    }
+  </script>
+</body>
+</html>

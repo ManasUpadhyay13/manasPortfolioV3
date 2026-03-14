@@ -53,8 +53,12 @@ const Squares = ({
                         ctx.fillRect(squareX, squareY, squareSize, squareSize);
                     }
 
+                    ctx.globalAlpha = 0.3; // decrease opacity
                     ctx.strokeStyle = borderColor;
+                    ctx.lineWidth = 1.2;
                     ctx.strokeRect(squareX, squareY, squareSize, squareSize);
+                    ctx.lineWidth = 1;
+                    ctx.globalAlpha = 1;
                 }
             }
 
