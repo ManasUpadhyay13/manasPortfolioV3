@@ -55,6 +55,7 @@ Position: after Experience, before Contact.
 **Layout: Wide Featured Banner + Grid Below**
 
 - Full-width horizontal card for the featured post (image left, content right)
+- If multiple posts are marked `featured`, use the most recently published one. If none are featured, use the most recent post.
 - 2 recent posts in a grid row underneath
 - "View all posts →" link at the bottom
 - **Mobile:** stacks vertically — featured post on top, recent posts below
@@ -114,7 +115,7 @@ components/
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID` — Sanity project ID
 - `NEXT_PUBLIC_SANITY_DATASET` — Dataset name (e.g. "production")
-- `SANITY_API_TOKEN` — API token for studio auth (server-side only)
+- `SANITY_API_TOKEN` — API token for server-side data fetching (studio uses cookie-based auth via Sanity dashboard)
 
 ### Dependencies
 
@@ -141,5 +142,5 @@ components/
 
 - **Homepage blog section:** Stacks vertically on mobile
 - **Blog listing grid:** 2 columns → 1 column on mobile
-- **Post sidebar TOC:** Collapses to sticky top bar or expandable drawer on mobile
+- **Post sidebar TOC:** Collapses to an expandable drawer on mobile
 - **Cover images:** Full-width on all breakpoints

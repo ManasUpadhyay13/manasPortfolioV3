@@ -28,6 +28,7 @@ import OnekoCat from '@/components/oneko/OnekoCat';
 import { LoadingProvider } from '@/components/LoadingProvider';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { ApiPrefetcher } from '@/components/ApiPrefetcher';
+import { PortfolioShell } from '@/components/PortfolioShell';
 
 export default function RootLayout({
     children
@@ -44,19 +45,21 @@ export default function RootLayout({
             </head>
             <body
                 className={`${inter.variable} ${jetbrains.variable} ${italiana.variable} antialiased text-foreground bg-background`}>
-                <LoadingProvider>
-                    <LoadingScreen />
-                    <ApiPrefetcher />
-                    <SmoothScroll />
-                    <OnekoCat />
-                    {process.env.NODE_ENV === 'development' && (
-                        <script
-                            defer
-                            src="https://cloud.umami.is/script.js"
-                            data-website-id={process.env.UMAMI_WEBSITE_ID}></script>
-                    )}
-                    {children}
-                </LoadingProvider>
+                <PortfolioShell>
+                    <LoadingProvider>
+                        <LoadingScreen />
+                        <ApiPrefetcher />
+                        <SmoothScroll />
+                        <OnekoCat />
+                        {process.env.NODE_ENV === 'development' && (
+                            <script
+                                defer
+                                src="https://cloud.umami.is/script.js"
+                                data-website-id={process.env.UMAMI_WEBSITE_ID}></script>
+                        )}
+                    </LoadingProvider>
+                </PortfolioShell>
+                {children}
             </body>
         </html>
     );
