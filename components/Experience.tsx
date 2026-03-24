@@ -9,16 +9,18 @@ import { ArrowRight, BarChart3 } from 'lucide-react';
 const experiences = [
     {
         company: 'Hy Bro :)',
-        role: 'Software Engineer',
+        role: 'Software Development Engineer',
         period: 'Oct 2024 - Present',
-        description: 'Building generative AI tools for reliable product photography.',
+        description: 'Building AI-powered image generation pipelines and scalable backend systems for fashion brands.',
         achievements: [
-            'Built the complete Bulk editorial system for generating editorial product images in bulk, used by nearly 100 users/day.',
-            'Added 5+ new AI editors/workflows used by over 335 unique users/month and maintained the video-generation tool with new video generation models.',
-            'Developed custom model-training pipeline using AI-toolkit and flux-context-portrait series model that created over 500 unique AI models for global fashion brands.',
-            'Built automated Zoho invoice generation for subscription purchases and multiple LLM-powered features.',
-            'Implemented multiple interactive guided tours, and did continuous UI/UX improvements to boost user activation.',
-            'Set up end-to-end analytics in PostHog, Crisp, and Mailjet, including funnels, events, retention, and trend dashboards for the internal team to analyze the user metrics.'
+            'Built Brand & Template Personalization infrastructure, enabling brands to access identity-tailored templates; optimized backend APIs and reduced response time from ~60 seconds to ~6 seconds — a 10× improvement in user experience.',
+            'Developed Bulk Click Generation feature from scratch — enabling scalable bulk editorial image generation, generating nearly 300k images. This was our first customer-facing feature launch.',
+            'Architected and delivered Fluid Single Shot, a major pipeline migration from Flux to Nano-Banana, significantly improving generation reliability, system performance, and reducing failure rates in production.',
+            'Developed and maintained multiple AI image transformation workflows — including image-to-ghost, image-to-sketch, and image-padding — powering editorial tools generating nearly 80k images monthly across global fashion brands.',
+            'Built a custom LoRA training pipeline using AI Toolkit and Flux Context Portrait models, producing 500+ fine-tuned .safetensors models for personalized fashion editorial generation.',
+            'Resolved 85+ production bug tickets, improving platform stability and user experience across the application; implemented interactive in-product guided tours and continuous UI/UX enhancements to boost user activation.',
+            'Set up end-to-end analytics infrastructure in PostHog, Crisp, and Mailjet — including funnels, retention cohorts, event tracking, and trend dashboards — enabling data-driven product decisions for the team.',
+            'Leveraged AI tooling extensively to maximize personal engineering output delivering on high-complexity features with a high degree of quality and ownership, also helped people across multiple teams to set up automation to boost their productivity.'
         ]
     },
     {
@@ -27,20 +29,21 @@ const experiences = [
         period: 'Jan 2024 - Oct 2024',
         description: 'Developed interactive web experiences and backend architectures.',
         achievements: [
-            'Developed 15+ interactive landing pages in Next.js with GSAP & Framer Motion.',
-            'Architected a scalable notification system for text/WhatsApp/email.',
-            'Reduced backend API response time by 2s avg using Message Queues.'
+            'Developed over 15+ interactive landing pages in Next.js with advanced scroll animations using GSAP & Framer Motion, crafting smooth, story-driven scroll experiences that aligned with brand identity and increased engagement.',
+            'Architected a scalable notification system for custom notifications over text/WhatsApp/email.',
+            'Collaborated with 4+ developers to build an e-commerce platform capable of supporting 1M+ monthly visitors.'
         ]
     },
     {
-        company: 'Krishko Infotech',
+        company: 'Krishko Infotech Pvt. Ltd.',
         role: 'Web Developer',
         period: 'Nov 2022 - Jan 2024',
         description: 'Full stack development for internal tools and client applications.',
         achievements: [
-            'Developed a mobile application from scratch using React Native + TypeScript (20% hike in hiring efficiency).',
-            'Migrated employee portal backend from PHP to Node.js.',
-            'Designed and implemented the front end of the terminal application using React.js + TypeScript, boosting admin efficiency by 30%.'
+            'Developed a mobile application from scratch using React Native + TypeScript, resulting in a 20% increase in hiring efficiency in the third quarter.',
+            'Designed and implemented the front end of the terminal application using React.js + TypeScript, boosting admin efficiency by 30%.',
+            'Migrated the backend of the employee portal from PHP to Node.js.',
+            'Developed APIs for the dispatch application using Node.js as the backend framework.'
         ]
     }
 ];

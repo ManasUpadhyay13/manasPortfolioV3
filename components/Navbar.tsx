@@ -12,14 +12,32 @@ export function Navbar() {
                         Manas
                     </span>
                 </Link>
-                <nav>
-                    <Link
-                        href="/blog"
+                {/* <nav className="flex items-center gap-6">
+                    <button
+                        onClick={() =>
+                            document
+                                .getElementById('experience')
+                                ?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                        className="text-sm font-medium text-gray-600 hover:text-black transition-colors cursor-pointer"
+                    >
+                        Experience
+                    </button>
+                    <a
+                        href="https://cal.com/manasupadhyay/15min"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
                     >
-                        Blog
+                        Call
+                    </a>
+                    <Link
+                        href="/coding-stats"
+                        className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
+                    >
+                        Coding
                     </Link>
-                </nav>
+                </nav> */}
             </Container>
         </header>
     );

@@ -3,7 +3,7 @@
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';
 import { motion } from 'framer-motion';
-import { ArrowDown, Calendar } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 import Image from 'next/image';
 import { StatusIndicator } from './ui/StatusIndicator';
@@ -69,7 +69,7 @@ export function Hero() {
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="text-xl text-gray-600 max-w-2xl leading-relaxed">
                         I&apos;m <span className="text-foreground font-medium">Manas Upadhyay</span>
-                        , a Software Engineer with 3+ years of experience in building scalable AI
+                        , a Software Engineer with nearly 4 years of experience in building scalable AI
                         web applications, and a gym freak. Based in{' '}
                         <span className="text-foreground font-medium">India</span>.
                     </motion.p>
@@ -85,7 +85,7 @@ export function Hero() {
                             onClick={(e) => {
                                 e.preventDefault();
                                 document
-                                    .getElementById('projects')
+                                    .getElementById('experience')
                                     ?.scrollIntoView({ behavior: 'smooth' });
                             }}
                             className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer">
@@ -99,17 +99,8 @@ export function Hero() {
                                 }}>
                                 <ArrowDown className="w-4 h-4" />
                             </motion.span>
-                            View Projects
+                            View Experience
                         </button>
-
-                        <a
-                            href="https://cal.com/manasupadhyay/15min"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:text-black hover:border-black hover:bg-gray-50 bg-white transition-all cursor-pointer">
-                            <Calendar size={18} />
-                            <span>Book a call</span>
-                        </a>
                     </motion.div>
                 </div>
             </Container>
