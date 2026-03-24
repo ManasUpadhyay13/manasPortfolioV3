@@ -46,9 +46,9 @@ export default function RootLayout({
             </head>
             <body
                 className={`${inter.variable} ${jetbrains.variable} ${italiana.variable} antialiased text-foreground bg-background`}>
-                <PortfolioShell>
-                    <Analytics />
-                    <LoadingProvider>
+                <Analytics />
+                <LoadingProvider>
+                    <PortfolioShell>
                         <LoadingScreen />
                         <ApiPrefetcher />
                         <SmoothScroll />
@@ -59,9 +59,9 @@ export default function RootLayout({
                                 src="https://cloud.umami.is/script.js"
                                 data-website-id={process.env.UMAMI_WEBSITE_ID}></script>
                         )}
-                    </LoadingProvider>
-                </PortfolioShell>
-                {children}
+                    </PortfolioShell>
+                    {children}
+                </LoadingProvider>
             </body>
         </html>
     );

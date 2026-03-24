@@ -62,9 +62,7 @@ const textVariants: Variants = {
 export function LoadingScreen() {
     const { isLoading } = useLoading();
     const numBlocks = useNumBlocks();
-    const [visible, setVisible] = useState(
-        process.env.NODE_ENV !== 'development'
-    );
+    const [visible, setVisible] = useState(process.env.NODE_ENV !== 'development');
     const [dots, setDots] = useState('');
     // 0 = typing command, 1 = server started, 2 = loading resources
     const [termPhase, setTermPhase] = useState(0);
